@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "282198732334",
+    "project_id": "style-avenue-fb8f4",
+    "storage_bucket": "style-avenue-fb8f4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:282198732334:android:c54d0b7ba99f305a2279bf",
+        "android_client_info": {
+          "package_name": "com.example.clothing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "282198732334-v2haacecoctjob551bpi5e5s2c49q9jf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.clothing",
+            "certificate_hash": "4cf9447918275e6be68f075372b1fb92005c87c6"
+          }
+        },
+        {
+          "client_id": "282198732334-248ipubmaeh81dcv73ftt6be8dop8fib.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALI7NMM_pZ84TvncKMSWxpqYpB39qSVC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "282198732334-248ipubmaeh81dcv73ftt6be8dop8fib.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "282198732334-489i4hjm5vs9uti80v2lpvd312ba8rc1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.clothing"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
