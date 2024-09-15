@@ -1,18 +1,19 @@
 import 'package:clothing/core/constants/constants.dart';
+import 'package:clothing/presentation/bloc/search/search_bloc_bloc.dart';
 import 'package:clothing/presentation/widgets/home_screen/carousal_widget.dart';
 import 'package:clothing/presentation/widgets/home_screen/gender_widget.dart';
 import 'package:clothing/presentation/widgets/home_screen/product_title_card.dart';
 import 'package:clothing/presentation/widgets/home_screen/search_widget.dart';
+import 'package:clothing/presentation/widgets/home_screen/username_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreenContent extends StatelessWidget {
   const HomeScreenContent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize:
@@ -29,10 +30,7 @@ class HomeScreenContent extends StatelessWidget {
                     homescreenTitle,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  const Text(
-                    'Ruzana',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
+                  const UsernameWidget(),
                   const SizedBox(height: 20), // Adjust the space as needed
                   Container(
                     width: double.infinity,
@@ -51,14 +49,15 @@ class HomeScreenContent extends StatelessWidget {
           ),
         ),
       ),
-
       body: ListView(
         children: [
           CarousalWidget(),
-          const SizedBox(height: 25,),
-          ProductListView(firestore: firestore),              
+          const SizedBox(
+            height: 25,
+          ),
+          const ProductListView(),
         ],
-      ),     
+      ),
     );
   }
 }
@@ -66,57 +65,42 @@ class HomeScreenContent extends StatelessWidget {
 class ProductListView extends StatelessWidget {
   const ProductListView({
     super.key,
-    required this.firestore,
   });
-
-  final FirebaseFirestore firestore;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: StreamBuilder<QuerySnapshot>(
-      stream: firestore.collection('products').snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState ==
-            ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    return BlocBuilder<SearchBloc, SearchState>(
+      builder: (context, state) {
+         String cardTitle = state.products.isEmpty ? 'New Arrivals' : 'Search Results';
+         if (state.products.isNotEmpty) {
+          return ProductTitleCard(productData: state.products,cardTitle: cardTitle);
         }
-        if (snapshot.hasError) {
-          return Center(
-              child: Text('Error: ${snapshot.error}'));
+        else{
+             return SizedBox(
+          child: StreamBuilder<QuerySnapshot>(
+            stream: firestore.collection('products').snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              }
+              if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+                final productData = snapshot.data!.docs;
+                return ProductTitleCard(
+                  productData: productData,
+                  cardTitle: cardTitle,
+                );
+              }
+              return const Center(child: Text('No products added'));
+            },
+          ),
+        );
         }
-        if (snapshot.hasData &&
-            snapshot.data!.docs.isNotEmpty) {
-          final productData = snapshot.data!.docs;
-          return ProductTitleCard(
-            productData: productData,
-            cardTitle: 'New Arrivals',
-          );
-        }
-        return const Center(child: Text('No products added'));
+     
       },
-    ),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

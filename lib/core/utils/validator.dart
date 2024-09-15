@@ -76,4 +76,11 @@ class Validator{
     }
     return null;
   }
+
+  static String? validate(String? value, String fieldName) {
+  if (value == null || value.isEmpty) {
+    return '$fieldName is required';
+  }
+  return null;
+}
 }

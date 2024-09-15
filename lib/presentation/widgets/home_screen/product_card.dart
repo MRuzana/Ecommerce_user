@@ -1,14 +1,19 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class ProductCard extends StatelessWidget {
   final String imageUrl;
   final String productName;
   final String price;
   final String productId;
-  const ProductCard({super.key,required this.imageUrl,required this.productName,required this.price,required this.productId});
+  const ProductCard(
+      {super.key,
+      required this.imageUrl,
+      required this.productName,
+      required this.price,
+      required this.productId});
 
- @override
+  @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -19,7 +24,7 @@ class ProductCard extends StatelessWidget {
       ),
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, '/productDetail',arguments: productId);
+          Navigator.pushNamed(context, '/productDetail', arguments: productId);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,7 +32,8 @@ class ProductCard extends StatelessWidget {
             // Ensure the image adapts to the container size
             Flexible(
               child: ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(10)),
                 child: Image.network(
                   height: 200,
                   imageUrl,
@@ -44,15 +50,15 @@ class ProductCard extends StatelessWidget {
                   Text(
                     productName,
                     style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      overflow: TextOverflow.ellipsis                 
-                    ),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        overflow: TextOverflow.ellipsis),
                   ),
                   const SizedBox(height: 4),
-                  Text('₹$price',
+                  Text(
+                    '₹$price',
                     style: const TextStyle(
-                      fontSize: 14,                 
+                      fontSize: 14,
                     ),
                   ),
                 ],

@@ -1,4 +1,4 @@
-import 'package:clothing/presentation/bloc/bloc/favourites_bloc.dart';
+import 'package:clothing/presentation/bloc/favourites/favourites_bloc.dart';
 import 'package:clothing/presentation/widgets/home_screen/size_widget.dart';
 import 'package:clothing/presentation/widgets/product_detail/preview_image.dart';
 import 'package:clothing/presentation/widgets/product_detail/thumbnail_image.dart';
@@ -41,7 +41,9 @@ class ProductListView extends StatelessWidget {
                 PreviewImage(imageList: imageList),
                 const SizedBox(height: 20),
                 ThumbnailImages(imageList: imageList),
-                const SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Row(
@@ -51,21 +53,34 @@ class ProductListView extends StatelessWidget {
                         sizeList: sizeList,
                       ),
                       BlocBuilder<FavouritesBloc, FavouritesState>(
+                       
                         builder: (context, state) {
+                           final isFavourite = context.read<FavouritesBloc>().isProductFavourite(productId);
                           return IconButton(
                               onPressed: () {
-                                context.read<FavouritesBloc>().add(ToggleFavourites());
+                                context.read<FavouritesBloc>().add(
+                                    ToggleFavouritesEvent(
+                                      productId: productId,
+                                      productName: productname,
+                                      price: price,
+                                      image: imageList[0],
+                                    ),
+                                );
                               },
                               icon: Icon(
                                 Icons.favorite,
-                                color: state.isFavourite ? Colors.red : Colors.grey,
+                                color: isFavourite
+                                    ? Colors.red
+                                    : Colors.grey,
                               ));
                         },
                       )
                     ],
                   ),
                 ),
-                const SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 25, right: 25),
                   child: Row(
@@ -82,7 +97,9 @@ class ProductListView extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 25, right: 25),
                   child: Text(

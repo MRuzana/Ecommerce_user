@@ -1,4 +1,7 @@
+import 'package:clothing/presentation/bloc/search/search_bloc_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 class SearchWidget extends StatelessWidget {
   const SearchWidget({
@@ -22,8 +25,14 @@ class SearchWidget extends StatelessWidget {
               border: InputBorder.none,
               hintText: 'Search...',
             ),
-            onChanged: (value) {
-              // Handle search logic here
+            onChanged: (query) {
+               if (query.isEmpty) {
+          // Emit an empty search query to revert to the default product list
+          context.read<SearchBloc>().add(SearchEvent(''));
+        } else {
+          // Trigger search when query is not empty
+          context.read<SearchBloc>().add(SearchEvent(query));
+        }
             },
           ),
         ),

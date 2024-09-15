@@ -1,9 +1,10 @@
+import 'package:clothing/data/repositories/shipping_address_impl.dart';
 import 'package:clothing/domain/model/profile_list_model.dart';
 import 'package:clothing/presentation/bloc/auth/auth_bloc.dart';
 import 'package:clothing/presentation/bloc/user_details/user_bloc.dart';
-import 'package:clothing/presentation/pages/addresses/shipping_address.dart';
+import 'package:clothing/presentation/pages/addresses/saved_address.dart';
 import 'package:clothing/presentation/pages/orders.dart';
-import 'package:clothing/presentation/pages/payment_method.dart';
+import 'package:clothing/presentation/pages/payment/payment_method.dart';
 import 'package:clothing/presentation/pages/settings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -132,15 +133,16 @@ class Profile extends StatelessWidget {
   }
 
   void _handleOnTap(BuildContext context, String title) {
+    ShippingAddressImplementation shippingAddressImplementation = ShippingAddressImplementation();
     if (title == 'My Orders') {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => const Orders()));
     } else if (title == 'Shipping Addresses') {
       Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => ShippingAddresses()));
+          MaterialPageRoute(builder: (context) => SavedAddresses(shippingAddressImplementation: shippingAddressImplementation,)));
     } else if (title == 'Payment Methods') {
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const PaymentMethod()));
+          .push(MaterialPageRoute(builder: (context) => PaymentMethod()));
     } else if (title == 'Settings') {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => const AppSettings()));

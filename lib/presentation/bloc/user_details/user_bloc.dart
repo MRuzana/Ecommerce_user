@@ -17,7 +17,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(UserLoadingState());
     try{
       final userdetails = await userRepository.getCurrentUser();
-      emit(UserLoadedState(userdetails['name'], userdetails['email']));
+      emit(UserLoadedState(userdetails['name']!, userdetails['email']!));
 
     }
     catch(e){

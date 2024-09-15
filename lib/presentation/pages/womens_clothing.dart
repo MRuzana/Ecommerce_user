@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class WomensClothing extends StatelessWidget {
-  WomensClothing({super.key});
+  const WomensClothing({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class WomensClothing extends StatelessWidget {
           ),
         ),
       ),
-      body: WomenListView(),
+      body: const WomenListView(),
     );
   }
 }

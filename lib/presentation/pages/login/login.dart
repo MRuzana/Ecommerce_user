@@ -100,7 +100,7 @@ class LoginScreen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Row(
+                              const Row(
                                 children: [
                                   // Checkbox(value: true, onChanged: (value) {}),
                                   // Text(
