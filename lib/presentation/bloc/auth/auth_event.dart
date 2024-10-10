@@ -18,8 +18,6 @@ class SignUpEvent extends AuthEvent{
   SignUpEvent({required this.user});
 }
 
-class FacebookSignInEvent extends AuthEvent{}
-
 class GoogleSignInEvent extends AuthEvent{}
 
 class LogoutEvent extends AuthEvent{}

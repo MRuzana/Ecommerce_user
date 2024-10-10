@@ -8,14 +8,23 @@ class ToggleFavouritesEvent extends FavouritesEvent {
   final String productName;
   final String price;
   final String image;
+  final String productQuantity;
+  final List size;
+  final String stock;
 
   ToggleFavouritesEvent ({
+  
     required this.productId,
     required this.productName,
     required this.price,
     required this.image,
+    required this.productQuantity,
+    required this.size,
+    required this.stock
+    
   });
 }
+
 
 class DeleteFavItemEvent extends FavouritesEvent{
   final String docId;

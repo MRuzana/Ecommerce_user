@@ -12,7 +12,7 @@ class GenderWidget extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-             Navigator.pushNamed(context, '/womensClothing');
+             Navigator.pushReplacementNamed(context, '/womensClothing');
           },
           child: Container(
             width: 130,
@@ -37,7 +37,7 @@ class GenderWidget extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, '/mensClothing');
+            Navigator.pushReplacementNamed(context, '/mensClothing');
           },
           child: Container(
             width: 100,

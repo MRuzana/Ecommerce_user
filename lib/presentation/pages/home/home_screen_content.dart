@@ -1,5 +1,6 @@
 import 'package:clothing/core/constants/constants.dart';
-import 'package:clothing/presentation/bloc/search/search_bloc_bloc.dart';
+import 'package:clothing/presentation/bloc/auth/auth_bloc.dart';
+import 'package:clothing/presentation/bloc/product_search/product_search_bloc.dart';
 import 'package:clothing/presentation/widgets/home_screen/carousal_widget.dart';
 import 'package:clothing/presentation/widgets/home_screen/gender_widget.dart';
 import 'package:clothing/presentation/widgets/home_screen/product_title_card.dart';
@@ -9,11 +10,31 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class HomeScreenContent extends StatelessWidget {
   const HomeScreenContent({super.key});
 
   @override
   Widget build(BuildContext context) {
+     context.read<AuthBloc>().add(CheckLoginStatusEvent());
     return Scaffold(
       appBar: PreferredSize(
         preferredSize:
@@ -52,34 +73,87 @@ class HomeScreenContent extends StatelessWidget {
       body: ListView(
         children: [
           CarousalWidget(),
-          const SizedBox(
-            height: 25,
-          ),
-          const ProductListView(),
+          const SizedBox(height: 25,),
+          const NewArrivals(),
+          const AllProducts(),
         ],
       ),
     );
   }
 }
 
-class ProductListView extends StatelessWidget {
-  const ProductListView({
+class AllProducts extends StatelessWidget {
+  const AllProducts({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
-    return BlocBuilder<SearchBloc, SearchState>(
+    return BlocBuilder<ProductSearchBloc, ProductSearchState>(
       builder: (context, state) {
-         String cardTitle = state.products.isEmpty ? 'New Arrivals' : 'Search Results';
-         if (state.products.isNotEmpty) {
-          return ProductTitleCard(productData: state.products,cardTitle: cardTitle);
-        }
-        else{
+        // String cardTitle = state.products.isEmpty ? 'All Products' : 'Search Results';
+         String cardTitle = 'All Products';
+
+        //  if (state.products.isNotEmpty) {
+        //   return ProductTitleCard(productData: state.products,cardTitle: cardTitle);
+        // }
+    //    else{
              return SizedBox(
           child: StreamBuilder<QuerySnapshot>(
-            stream: firestore.collection('products').snapshots(),
+            stream: firestore
+            .collection('products')
+            .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              }
+              if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+                final productData = snapshot.data!.docs;
+                
+                return ProductTitleCard(
+                  productData: productData,
+                  cardTitle: cardTitle,
+                );
+              }
+              return const Center(child: Text('No products added'));
+            },
+          ),
+        );
+        }
+     
+  // },
+    );
+  }
+}
+
+class NewArrivals extends StatelessWidget {
+  const NewArrivals({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    return BlocBuilder<ProductSearchBloc, ProductSearchState>(
+      builder: (context, state) {
+        // String cardTitle = state.products.isEmpty ? 'New Arrivals' : 'Search Results';
+         String cardTitle = 'New Arrivals';
+
+        //  if (state.products.isNotEmpty) {
+        //   return ProductTitleCard(productData: state.products,cardTitle: cardTitle);
+        // }
+        // else{
+             return SizedBox(
+          child: StreamBuilder<QuerySnapshot>(
+            stream: firestore
+            .collection('products')
+            .orderBy('timestamp', descending: true) // Order by timestamp, most recent first
+            .limit(4) 
+            .snapshots(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
@@ -100,7 +174,11 @@ class ProductListView extends StatelessWidget {
         );
         }
      
-      },
+    //  },
     );
   }
+
+  
 }
+
+

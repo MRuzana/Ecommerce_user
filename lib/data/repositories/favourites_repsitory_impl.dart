@@ -7,7 +7,7 @@ class FavouritesRepositoryImplementation implements FavouritesRepository{
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   
   @override
-  Future<void> addToFavourites(String productId, String productName, String price, String image)async {
+  Future<void> addToFavourites(String productId, String productName, String price, String image,String quantity,List size,String stock)async {
      try{
       User? user = _firebaseAuth.currentUser;
        if (user != null) {
@@ -19,7 +19,10 @@ class FavouritesRepositoryImplementation implements FavouritesRepository{
         await cartRef.set({
           'productName': productName,
           'price': price,
-          'image':image
+          'image':image,
+          'quantity':quantity,
+          'size':size,
+          'stock':stock
         });
 
       } else {
@@ -42,7 +45,7 @@ class FavouritesRepositoryImplementation implements FavouritesRepository{
       .doc(docId)
       .delete();
     } catch (e) {
-      print('error : $e');
+     
       throw Exception('Failed to remove product. Please try again');
     }
   }

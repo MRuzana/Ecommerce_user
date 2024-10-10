@@ -12,7 +12,9 @@ import 'package:clothing/presentation/pages/product_detail.dart';
 import 'package:clothing/presentation/pages/signup/signup.dart';
 import 'package:clothing/presentation/pages/signup/success_email.dart';
 import 'package:clothing/presentation/pages/signup/verify_email.dart';
+import 'package:clothing/presentation/pages/success_screen.dart';
 import 'package:clothing/presentation/pages/womens_clothing.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Routes{
@@ -28,13 +30,16 @@ class Routes{
     '/resetPassword':(context) => const PasswordReset(),
     '/home':(context) => const HomeScreen(),
     '/mensClothing':(context)=> const MensClothing(),
-    '/womensClothing':(context)=> WomensClothing(),
+    '/womensClothing':(context)=> const WomensClothing(),
     '/productDetail':(context)=> ProductDetail(
       productId: ModalRoute.of(context)!.settings.arguments as String,
     ),
     '/cart':(context) => const Cart(),
-    '/checkout':(context) => Checkout(),
+    '/checkout':(context) => Checkout(state: ModalRoute.of(context)!.settings.arguments as State),
     '/addAddress':(context) => AddAddresses(),
     '/payment':(context) => PaymentMethod(),
+    '/successScreen':(context) => const SuccessScreen(),
+   // '/trackOrder':(context) => const TrackOrder(),
+   
   };
 }

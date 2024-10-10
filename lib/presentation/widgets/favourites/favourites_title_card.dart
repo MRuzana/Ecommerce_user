@@ -19,7 +19,7 @@ class FavouritesTitleCard extends StatelessWidget {
         crossAxisCount: 2, // Display two products per row
         crossAxisSpacing: 15, // Space between columns
         mainAxisSpacing: 15 , // Space between rows
-        childAspectRatio: 0.6  , // Adjust the size ratio of each item
+        childAspectRatio: 0.77, // Adjust the size ratio of each item
       ),
       itemCount: productData!.length,
       itemBuilder: (context, index) {
@@ -28,18 +28,24 @@ class FavouritesTitleCard extends StatelessWidget {
         final price = product['price'];
         final productId = product.id;
         final image = product['image'];
+        final List sizes = product['size'];
+        final String quantity = product['quantity'];
+        final String stock = product['stock'];
 
         return FavProductCard( // Using the Grid-based product card
           imageUrl: image,
           productName: productName,
           price: price,
           productId: productId,
+          size: sizes,
+          quantity: quantity,
+          stock: stock,
+          
         );
       },
     );
   }
 }
-
 
 
 

@@ -5,4 +5,5 @@ abstract class ShippingAdddress{
   Stream<QuerySnapshot>fetchAddress();
   Future<void>deleteAddress(String documentId);
   Future<void>editAddress(String documentId,String name,String address,String pin,String state,String phoneNumber);
+
 }

@@ -10,6 +10,7 @@ class CartLoadedState extends CartState {
   final List<Map<String, dynamic>> cartItems;
 
   CartLoadedState(this.cartItems);
+   int get itemCount => cartItems.length;
 }
 class CartItemAddedState extends CartState {}
 

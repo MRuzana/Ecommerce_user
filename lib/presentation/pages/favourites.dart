@@ -9,8 +9,18 @@ class Favourites extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     // backgroundColor: const Color.fromARGB(255, 233, 225, 225),
         appBar: AppBar(
-          title: const Text('Favourites'),
+          title: const Center(child: Text('Favourites',style: TextStyle(
+            color:Colors.white, 
+            
+          ),)),
+          backgroundColor: Colors.red,
+  //         iconTheme: IconThemeData(
+  //         color: Theme.of(context).brightness == Brightness.dark
+  //           ? Colors.black // Back button color in dark mode
+  //           : Colors.black, // Back button color in light mode
+  // ),
          
         ),
         body: const SafeArea(
@@ -27,8 +37,8 @@ class FavouriteContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-    User? user = _firebaseAuth.currentUser;
+    final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    User? user = firebaseAuth.currentUser;
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     return SizedBox(
@@ -52,6 +62,7 @@ class FavouriteContent extends StatelessWidget {
             );
           }
           return const Center(child: Text('No products added'));
+          
         },
       ),
     );

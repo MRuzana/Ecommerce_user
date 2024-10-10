@@ -1,5 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:clothing/presentation/bloc/category_index/category_index_bloc.dart';
+import 'package:clothing/presentation/bloc/product_search/product_search_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 Widget mensCategoryWidget(BuildContext context) {
   return SizedBox(
@@ -19,27 +24,45 @@ Widget mensCategoryWidget(BuildContext context) {
                 scrollDirection: Axis.horizontal,
                 itemCount: categoryList!.length,
                 itemBuilder: (context, index) {
-                  return IntrinsicWidth(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(30)),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 13, right: 13),
-                          child: Center(
-                            child: Text(
-                              categoryList.isNotEmpty
-                                  ? categoryList[index]
-                                  : '',
-                              style: const TextStyle(
-                                  fontSize: 18, color: Colors.white),
+                  return BlocBuilder<CategoryIndexBloc, CategoryState>(
+                    builder: (context, state) {
+
+                      bool isSelected = index == state.selectedIndex;
+                      return GestureDetector(
+                        onTap: () {
+                          context
+                              .read<CategoryIndexBloc>()
+                              .add(SelectCategoryEvent(index));
+
+                          context.read<ProductSearchBloc>().add(
+                              FilterByCategoryEvent(
+                                  category: categoryList[index]));
+                        },
+                        child: IntrinsicWidth(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: isSelected ? Colors.grey : Colors.black,
+                                  borderRadius: BorderRadius.circular(30)),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 13, right: 13),
+                                child: Center(
+                                  child: Text(
+                                    categoryList.isNotEmpty
+                                        ? categoryList[index]
+                                        : '',
+                                    style: const TextStyle(
+                                        fontSize: 18, color: Colors.white),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   );
                 });
           } else {

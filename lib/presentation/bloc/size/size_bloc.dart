@@ -4,16 +4,18 @@ import 'package:meta/meta.dart';
 part 'size_event.dart';
 part 'size_state.dart';
 
+
 class SizeBloc extends Bloc<SizeEvent, SizeState> {
-  SizeBloc() : super(SizeState([])) {
+  SizeBloc() : super(SizeState(null)) {
     on<ToggleSize>((event, emit) {
-      List<String> updatedSizes = List.from(state.selectedSizes);
-      if (updatedSizes.contains(event.size)) {
-        updatedSizes.remove(event.size);
+    
+       if (state.selectedSize == event.size) {
+        emit(SizeState(null)); 
       } else {
-        updatedSizes.add(event.size);
+        emit(SizeState(event.size)); 
+        // Select the new size
       }
-      emit(SizeState(updatedSizes));
     });
+   
   }
 }

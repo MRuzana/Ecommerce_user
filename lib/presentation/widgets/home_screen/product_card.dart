@@ -6,12 +6,15 @@ class ProductCard extends StatelessWidget {
   final String productName;
   final String price;
   final String productId;
+  final String stock;
   const ProductCard(
       {super.key,
       required this.imageUrl,
       required this.productName,
       required this.price,
-      required this.productId});
+      required this.productId,
+      required this.stock,
+      });
 
   @override
   Widget build(BuildContext context) {

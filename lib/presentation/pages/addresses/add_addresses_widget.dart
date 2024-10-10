@@ -12,17 +12,13 @@ class AddAdressWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            'Shipping Addresses',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
+          const Text('Shipping Addresses' ),
           IconButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/addAddress');
               },
               icon: const Icon(
                 Icons.add_circle,
-                color: Colors.black,
               )),
         ],
       ),

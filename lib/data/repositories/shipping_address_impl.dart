@@ -85,4 +85,21 @@ class ShippingAddressImplementation implements ShippingAdddress {
       throw Exception('Failed to update the address : $e');
     }
   }
+
+   Future<Map<String, dynamic>> getAddressById(String documentId) async {
+    try {
+      DocumentSnapshot addressDoc = await FirebaseFirestore.instance
+          .collection('addresses') // Replace with your collection name
+          .doc(documentId)
+          .get();
+
+      if (!addressDoc.exists) {
+        throw Exception('Address not found');
+      }
+
+      return addressDoc.data() as Map<String, dynamic>;
+    } catch (e) {
+      throw Exception('Failed to fetch address: $e');
+    }
+  }
 }

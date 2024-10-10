@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:clothing/core/utils/validator.dart';
 import 'package:clothing/data/repositories/shipping_address_impl.dart';
 import 'package:clothing/presentation/widgets/button_widget.dart';
@@ -31,11 +33,20 @@ class AddAddresses extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true, 
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 233, 225, 225),
+        backgroundColor: Colors.red,
+      
         title: addressData == null
-        ? const Text('Add Address')
-        : const Text('Edit Address')
+        ? const Text('Add Address',style: TextStyle(
+          color: Colors.white, 
+        ),)
+        : const Text('Edit Address',style: TextStyle(
+          color: Colors.white,
+        ),),
+        iconTheme: const IconThemeData(
+          color: Colors.white, // Back button color in light mode
+  ),
       ),
+      
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(

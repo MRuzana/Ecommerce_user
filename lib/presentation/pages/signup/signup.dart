@@ -5,7 +5,6 @@ import 'package:clothing/presentation/bloc/auth/auth_bloc.dart';
 import 'package:clothing/presentation/bloc/checkbox/checkbox_bloc.dart';
 import 'package:clothing/presentation/bloc/password/password_bloc.dart';
 import 'package:clothing/presentation/widgets/button_widget.dart';
-import 'package:clothing/presentation/widgets/google_widget.dart';
 import 'package:clothing/presentation/widgets/text_form_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -148,11 +147,11 @@ class SignUpScreen extends StatelessWidget {
                       const SizedBox(
                         height: 40,
                       ),
-                      Text(
-                        'Or Sign up with',
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                      const GoogleWidget(),
+                      // Text(
+                      //   'Or Sign up with',
+                      //   style: Theme.of(context).textTheme.headlineSmall,
+                      // ),
+                      // const GoogleWidget(),
                     ],
                   )),
             ],

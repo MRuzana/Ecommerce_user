@@ -33,9 +33,10 @@ class ProductTitleCard extends StatelessWidget {
                 final productName = product['productName'];
                 final price = product['price'];
                 final productId = product.id;
+                final stock = product['stock'];
                 
                 final List<dynamic> imageList = product['imagePath'];
-                return ProductCard(imageUrl: imageList[0],productName: productName,price: price, productId: productId,);
+                return ProductCard(imageUrl: imageList[0],productName: productName,price: price, productId: productId,stock: stock,);
               },
               scrollDirection: Axis.horizontal,
               

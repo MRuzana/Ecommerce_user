@@ -1,7 +1,6 @@
-import 'package:clothing/presentation/bloc/search/search_bloc_bloc.dart';
+import 'package:clothing/presentation/bloc/product_search/product_search_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 
 class SearchWidget extends StatelessWidget {
   const SearchWidget({
@@ -21,18 +20,26 @@ class SearchWidget extends StatelessWidget {
         ),
         Expanded(
           child: TextField(
+            style: const TextStyle(color: Colors.black),
             decoration: const InputDecoration(
               border: InputBorder.none,
               hintText: 'Search...',
+              hintStyle: TextStyle(
+                  color: Colors.black // Hint text color for light mode
+                  ),
             ),
             onChanged: (query) {
-               if (query.isEmpty) {
-          // Emit an empty search query to revert to the default product list
-          context.read<SearchBloc>().add(SearchEvent(''));
-        } else {
-          // Trigger search when query is not empty
-          context.read<SearchBloc>().add(SearchEvent(query));
-        }
+              if (query.isEmpty) {
+                // Emit an empty search query to revert to the default product list
+                context
+                    .read<ProductSearchBloc>()
+                    .add(SearchByProductEvent(query: query));
+              } else {
+                // Trigger search when query is not empty
+                context
+                    .read<ProductSearchBloc>()
+                    .add(SearchByProductEvent(query: query));
+              }
             },
           ),
         ),

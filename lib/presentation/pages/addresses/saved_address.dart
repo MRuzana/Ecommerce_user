@@ -9,10 +9,19 @@ class SavedAddresses extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 233, 225, 225),
+     
       appBar: AppBar(
-        title: const Text('My Addresses'),
+        title: const Text('My Addresses',style: TextStyle(
+          color: Colors.white, 
+        ),),
+         backgroundColor: Colors.red,
+         iconTheme: const IconThemeData(
+          color: Colors.white, 
+        
+         
       ),
+      ),
+      
       body: SafeArea(
         child: Column(
           children: [

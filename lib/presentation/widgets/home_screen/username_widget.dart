@@ -1,5 +1,4 @@
-import 'package:clothing/presentation/bloc/user_details/user_bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:clothing/presentation/bloc/auth/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,25 +9,26 @@ class UsernameWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    context.read<UserBloc>().add(FetchUserDetails(userId: userId));
-    
-    return BlocBuilder<UserBloc, UserState>(
+    return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
-        // if(state is UserLoadingState){
-        //   return const CircularProgressIndicator();
-        // }
-        if(state is UserLoadedState){
-          return Text(
-          state.name,
-          style: const TextStyle(color: Colors.white, fontSize: 20),
-        );
+        if (state is AuthLoadingState) {
+          return const CircularProgressIndicator();
         }
-        else if(state is UserErrorState){
-          return Text(state.errorMessage);
-        }  
-        return const Text('Unknown state');                                        
+
+        if (state is AuthenticatedState) {
+          // Display user's name if available
+          final String username = state.username ?? 'Unknown User';
+          return Text(
+            username,
+            style: const TextStyle(color: Colors.white, fontSize: 20),
+          );
+        }
+
+        if (state is AuthErrorState) {
+          return Text('Error: ${state.errorMessage}');
+        }
+
+        return const Text('User not logged in');
       },
     );
   }

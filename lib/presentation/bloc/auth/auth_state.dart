@@ -14,7 +14,9 @@ class AuthLoadingState extends AuthState{}
 class AuthenticatedState extends AuthState{
 
   User? user;
-  AuthenticatedState({this.user});
+  String? username;
+  String? email;
+  AuthenticatedState({this.user,this.username,this.email});
 }
 
 class UnAuthenticatedState extends AuthState {}

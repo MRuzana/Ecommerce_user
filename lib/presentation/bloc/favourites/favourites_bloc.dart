@@ -31,6 +31,9 @@ class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
           event.productName,
           event.price,
           event.image,
+          event.productQuantity,
+          event.size,
+          event.stock
         );
       } else {
         // Remove from favourites

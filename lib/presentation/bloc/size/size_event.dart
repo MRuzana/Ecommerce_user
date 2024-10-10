@@ -5,7 +5,6 @@ sealed class SizeEvent {}
 
 class ToggleSize extends SizeEvent{
   final String size;
-  ToggleSize({
-    required this.size
-  });
+  ToggleSize({required this.size});
 }
+

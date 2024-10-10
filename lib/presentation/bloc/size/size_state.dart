@@ -1,7 +1,16 @@
 part of 'size_bloc.dart';
 
 class SizeState {
-  final List<String> selectedSizes;
+  final String? selectedSize;
 
-  SizeState(this.selectedSizes);
+  SizeState(this.selectedSize);
+
+   SizeState copyWith({String? selectedSize}) {
+    return SizeState(selectedSize ?? this.selectedSize);
+  }
 }
+
+
+
+
+

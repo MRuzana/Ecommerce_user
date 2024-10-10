@@ -20,14 +20,6 @@ class GoogleWidget extends StatelessWidget {
           width: 30,
           height: 30,)
         ),
-        //  IconButton(
-        //   onPressed: (){
-        //     context.read<AuthBloc>().add(FacebookSignInEvent());
-        //   }, 
-        //   icon: Image.asset('lib/assets/images/facebook.png',
-        //   width: 20,
-        //   height: 20,)
-        // ),
       ],
     );
   }

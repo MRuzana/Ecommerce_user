@@ -1,12 +1,11 @@
+import 'package:clothing/data/repositories/order_repo_impl.dart';
 import 'package:clothing/data/repositories/shipping_address_impl.dart';
 import 'package:clothing/domain/model/profile_list_model.dart';
 import 'package:clothing/presentation/bloc/auth/auth_bloc.dart';
-import 'package:clothing/presentation/bloc/user_details/user_bloc.dart';
 import 'package:clothing/presentation/pages/addresses/saved_address.dart';
-import 'package:clothing/presentation/pages/orders.dart';
-import 'package:clothing/presentation/pages/payment/payment_method.dart';
-import 'package:clothing/presentation/pages/settings.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:clothing/presentation/pages/order/order.dart';
+import 'package:clothing/presentation/pages/about/about.dart';
+import 'package:clothing/presentation/widgets/user_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,11 +24,7 @@ class Profile extends StatelessWidget {
         leadingIcon: const Icon(Icons.location_on),
         trailingIcon: const Icon(Icons.chevron_right)),
     ProfileList(
-        title: 'Payment Methods',
-        leadingIcon: const Icon(Icons.payment_rounded),
-        trailingIcon: const Icon(Icons.chevron_right)),
-    ProfileList(
-        title: 'Settings',
+        title: 'About App',
         leadingIcon: const Icon(Icons.settings),
         trailingIcon: const Icon(Icons.chevron_right)),
     ProfileList(
@@ -40,8 +35,8 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    context.read<UserBloc>().add(FetchUserDetails(userId: userId));
+    //final userId = FirebaseAuth.instance.currentUser!.uid;
+    //context.read<UserBloc>().add(FetchUserDetails(userId: userId));
 
     return Scaffold(
       appBar: PreferredSize(
@@ -64,45 +59,16 @@ class Profile extends StatelessWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                  Row(
+                  const Row(
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 30,
                         child: Icon(
                           Icons.person_3,
                           size: 50,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: BlocBuilder<UserBloc, UserState>(
-                          builder: (context, state) {
-                            if (state is UserLoadingState) {
-                              return const CircularProgressIndicator();
-                            } else if (state is UserLoadedState) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    state.name,
-                                    style: const TextStyle(
-                                        color: Colors.white, fontSize: 15),
-                                  ),
-                                  Text(
-                                    state.email,
-                                    style: const TextStyle(
-                                        color: Color.fromARGB(255, 82, 82, 82), fontSize: 15),
-                                  ),
-                                ],
-                              );
-                            } else if (state is UserErrorState) {
-                              state.errorMessage;
-                            }
-
-                            return const Text('Unknown state');
-                          },
-                        ),
-                      ),
+                      UserDetails(),
                     ],
                   ),
                   const SizedBox(height: 20), // Adjust the space as needed
@@ -134,18 +100,17 @@ class Profile extends StatelessWidget {
 
   void _handleOnTap(BuildContext context, String title) {
     ShippingAddressImplementation shippingAddressImplementation = ShippingAddressImplementation();
+    OrderRepositoryImplementation orderRepositoryImplementation = OrderRepositoryImplementation();
     if (title == 'My Orders') {
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const Orders()));
+          .push(MaterialPageRoute(builder: (context) => Order(orderRepositoryImplementation: orderRepositoryImplementation,)));
     } else if (title == 'Shipping Addresses') {
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => SavedAddresses(shippingAddressImplementation: shippingAddressImplementation,)));
-    } else if (title == 'Payment Methods') {
+   
+    } else if (title == 'About App') {
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => PaymentMethod()));
-    } else if (title == 'Settings') {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const AppSettings()));
+          .push(MaterialPageRoute(builder: (context) => const AboutApp()));
     } else {
       signoutAlert(context);
     }
@@ -186,3 +151,6 @@ class Profile extends StatelessWidget {
     Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
   }
 }
+
+
+

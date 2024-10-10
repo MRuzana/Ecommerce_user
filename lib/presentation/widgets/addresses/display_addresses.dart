@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:clothing/data/repositories/shipping_address_impl.dart';
 import 'package:clothing/presentation/bloc/address_checkbox/address_checkbox_bloc.dart';
 import 'package:clothing/presentation/pages/checkout/checkout.dart';
@@ -51,13 +53,15 @@ class DisplayAddressWidget extends StatelessWidget {
                 final state = addressData['state'] ?? 'No State';
 
                 return Padding(
-                    padding: const EdgeInsets.only(
-                        left: 20, right: 20, bottom: 20),
+                    padding:
+                        const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                     child: Container(
                       width: double.infinity,
                       height: showShippingSelection ? 160 : 130,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).brightness == Brightness.dark
+            ? Colors.white // Text color in dark mode
+            : const Color.fromARGB(255, 239, 238, 238), 
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Padding(
@@ -68,10 +72,10 @@ class DisplayAddressWidget extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(name),
-                                Text(address),
-                                Text(pin),
-                                Text(state),
+                                Text(name ,style: const TextStyle(color: Colors.black),),
+                                Text(address,style: const TextStyle(color: Colors.black),),
+                                Text(pin,style: const TextStyle(color: Colors.black),),
+                                Text(state,style: const TextStyle(color: Colors.black),),
                                 if (showShippingSelection)
                                   BlocBuilder<AddressCheckboxBloc,
                                       AddressCheckBoxState>(
@@ -79,18 +83,18 @@ class DisplayAddressWidget extends StatelessWidget {
                                       return Row(
                                         children: [
                                           Checkbox(
-                                              value: state.isSelected(documentId),
+                                              value:
+                                                  state.isSelected(documentId),
                                               onChanged: (value) {
                                                 context
-                                                  .read<AddressCheckboxBloc>()
-                                                  .add(ToggleAddressCheckbox(documentId: documentId));
+                                                    .read<AddressCheckboxBloc>()
+                                                    .add(ToggleAddressCheckbox(
+                                                        documentId:
+                                                            documentId));
                                               }),
-                                          Text(
-                                            'Select this as shipping address',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineSmall,
-                                          )
+                                          const Text(
+                                            'Select this as shipping address',style: TextStyle(color: Colors.black),),
+                                    
                                         ],
                                       );
                                     },
@@ -135,7 +139,9 @@ class DisplayAddressWidget extends StatelessWidget {
               await shippingAddressImplementation.deleteAddress(documentId);
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
+                  behavior: SnackBarBehavior.floating,
                   backgroundColor: Colors.red,
+                  margin: EdgeInsets.all(10),                 
                   content: Text('Address deleted successfully!'),
                 ),
               );
@@ -143,7 +149,9 @@ class DisplayAddressWidget extends StatelessWidget {
             } catch (e) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
+                  behavior: SnackBarBehavior.floating,
                   backgroundColor: Colors.red,
+                  margin: const EdgeInsets.all(10),             
                   content: Text('Failed to delete address: $e'),
                 ),
               );
