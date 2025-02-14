@@ -42,26 +42,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
   }
 
-//   Future<void> deleteCartItemEvent(
-//     DeleteCartItemEvent event, Emitter<CartState> emit) async {
-//   if (state is CartLoadedState) {
-//     final currentState = state as CartLoadedState;
-//     final updatedCartItems = List<Map<String, dynamic>>.from(currentState.cartItems);
-
-//     // Remove the cart item locally
-//     updatedCartItems.removeWhere((item) => item['productId'] == event.docId);
-
-//     // Emit the updated state with the remaining items
-//     emit(CartLoadedState(updatedCartItems));
-
-//     // Update the repository by deleting the item
-//     try {
-//       await cartRepository.deleteCartItem(event.docId);
-//     } catch (e) {
-//       emit(CartErrorState(errorMessage: e.toString()));
-//     }
-//   }
-// }
 
   Future<void> deleteCartItemEvent(
   DeleteCartItemEvent event, Emitter<CartState> emit) async {

@@ -17,7 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc() : super(AuthInitial()) {
     on<CheckLoginStatusEvent>(checkLoginStatusEvent);
-    on<LoginEvent>(loginEvent);
+    //on<LoginEvent>(loginEvent);
     on<SignUpEvent>(signUpEvent);
     on<LogoutEvent>(logoutEvent);
     on<GoogleSignInEvent>(googleSignInEvent);
